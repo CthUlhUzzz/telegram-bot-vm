@@ -1,13 +1,11 @@
 import re
+
 from .helpers import format_message
 
-__all__ = ('SendMessageAction', 'StopAction', 'GetInputAction',
-           'ForwardToPositionAction', 'OperatorDialogAction')
+__all__ = ('BaseAction', 'SendMessageAction', 'GetInputAction', 'ForwardToPositionAction')
 
 
 class BaseAction:
-    input_required = False
-
     def exec(self, vm_context):
         raise NotImplementedError
 
@@ -21,14 +19,7 @@ class SendMessageAction(BaseAction):
         return format_message(self.text, vm_context.variables)
 
 
-class StopAction(BaseAction):
-    def exec(self, vm_context):
-        vm_context.stopped = True
-
-
 class GetInputAction(BaseAction):
-    input_required = True
-
     def __init__(self, variable_name):
         self.variable_name = variable_name
 
@@ -55,17 +46,3 @@ class ForwardToPositionAction(BaseAction):
                 vm_context.position += 1
         else:
             vm_context.position = self.position
-
-
-class OperatorDialogAction(BaseAction):
-    input_required = True
-
-    def __init__(self, start_message='Operator connected',
-                 stop_message='Operator disconnected',
-                 fail_message='No free operators'):
-        self.start_message = start_message
-        self.stop_message = stop_message
-        self.fail_message = fail_message
-
-    def exec(self, vm_context):
-        pass
