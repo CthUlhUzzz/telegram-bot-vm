@@ -16,7 +16,7 @@ class SendMessageAction(BaseAction):
 
     def exec(self, vm_context):
         vm_context.position += 1
-        return format_message(self.text, vm_context.variables)
+        return format_message(self.text, vm_context.variables),
 
 
 class GetInputAction(BaseAction):
