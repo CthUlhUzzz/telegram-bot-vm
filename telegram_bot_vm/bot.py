@@ -26,6 +26,7 @@ class Bot:
 
     def run(self, token):
         bot = TelegramBot(token)
+        bot.set_webhook()
         self.mailing_queue = Queue()
         self.process = BotVM.run(self.actions, bot, self.state, self.mailing_queue,
                                  self.additional_properties or {}, self.init_variables or {},
