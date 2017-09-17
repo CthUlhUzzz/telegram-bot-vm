@@ -51,6 +51,7 @@ class BotVM:
                         if text == '/start':
                             chats[chat_id] = VMContext(actions, additional_properties, init_variables)
                             state.add_chat(chat_id)
+                            state.increment_visits()
                         else:
                             if stopped_message is not None:
                                 bot.send_message(chat_id, stopped_message)
